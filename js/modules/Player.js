@@ -1,5 +1,6 @@
 export default class Player {
-  constructor(name) {
+  constructor(name, dimension) {
+    this.dimension = dimension;
     this.name = name;
     this.location = {
       x: 0,
@@ -12,8 +13,10 @@ export default class Player {
   initHtmlElement() {
     const div = document.createElement("div");
     div.classList.add("player");
-    div.style.left = this.location.x * 8;
-    div.style.top = this.location.y * 8;
+    div.style.left = this.location.x * this.dimension;
+    div.style.top = this.location.y * this.dimension;
+    div.style.width = this.dimension;
+    div.style.height = this.dimension;
     return div;
   }
   moveRight(limit) {
@@ -54,8 +57,8 @@ export default class Player {
   }
 
   renderPlayer() {
-    this.htmlElement.style.left = this.location.x * 8;
-    this.htmlElement.style.top = this.location.y * 8;
+    this.htmlElement.style.left = this.location.x * this.dimension;
+    this.htmlElement.style.top = this.location.y * this.dimension;
   }
 
   updateLocation() {

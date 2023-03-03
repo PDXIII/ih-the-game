@@ -1,5 +1,6 @@
 export default class Map {
-  constructor(dimension) {
+  constructor(mapSize, dimension) {
+    this.mapSize = mapSize;
     this.dimension = dimension;
     this.htmlElement = this.initHtmlElement();
     this.fields = this.initFields();
@@ -8,15 +9,17 @@ export default class Map {
   initHtmlElement() {
     const div = document.createElement("div");
     div.classList.add("map");
+    div.style.width = this.mapSize * this.dimension;
+    div.style.height = this.mapSize * this.dimension;
     return div;
   }
 
   initFields() {
     console.log(this.htmlElement, "boom");
     const fields = [];
-    for (let i = 0; i < this.dimension; i++) {
-      for (let j = 0; j < this.dimension; j++) {
-        const field = new Field(i * this.dimension + j, i, j);
+    for (let i = 0; i < this.mapSize; i++) {
+      for (let j = 0; j < this.mapSize; j++) {
+        const field = new Field(i * this.mapSize + j, i, j, this.dimension);
         fields.push(field);
         this.htmlElement.append(field.htmlElement);
       }
@@ -30,19 +33,21 @@ export default class Map {
 }
 
 class Field {
-  constructor(id, x, y) {
+  constructor(id, x, y, dimension) {
     this.fieldId = id;
-    this.htmlElement = this.initHtmlElement();
     this.location = {
       x: x,
       y: y,
     };
-    this.htmlElement.style.top = this.location.y * 8;
-    this.htmlElement.style.left = this.location.x * 8;
+    this.htmlElement = this.initHtmlElement(dimension);
   }
-  initHtmlElement() {
+  initHtmlElement(dimension) {
     const div = document.createElement("div");
     div.classList.add("field");
+    div.style.top = this.location.y * dimension;
+    div.style.left = this.location.x * dimension;
+    div.style.width = dimension;
+    div.style.height = dimension;
     return div;
   }
 }

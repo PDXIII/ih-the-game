@@ -1,7 +1,8 @@
 export default class Obstacle {
-  constructor(id, x, y) {
+  constructor(id, x, y, dimension) {
     this.type = "flower";
     this.fieldId = id;
+    this.dimension = dimension;
     this.location = {
       x: x,
       y: y,
@@ -11,8 +12,10 @@ export default class Obstacle {
   initHtmlElement() {
     const div = document.createElement("div");
     div.classList.add("obstacle");
-    div.style.left = this.location.x * 8;
-    div.style.top = this.location.y * 8;
+    div.style.left = this.location.x * this.dimension;
+    div.style.top = this.location.y * this.dimension;
+    div.style.width = this.dimension;
+    div.style.height = this.dimension;
     return div;
   }
 }

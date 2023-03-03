@@ -5,9 +5,10 @@ import Map from "./Map.js";
 export default class Game {
   constructor() {
     this.gameController = this.initGameController();
-    this.dimension = 8;
+    this.mapSize = 32;
+    this.dimension = 16;
     this.htmlElement = document.getElementById("app");
-    this.map = this.initMap(this.dimension);
+    this.map = this.initMap();
     this.obstacles = this.initObstacles();
     this.player = this.initPlayer();
   }
@@ -23,19 +24,19 @@ export default class Game {
         break;
 
       case "ArrowUp":
-        this.player.moveUp(this.dimension);
+        this.player.moveUp(this.mapSize);
         break;
 
       case "ArrowLeft":
-        this.player.moveLeft(this.dimension);
+        this.player.moveLeft(this.mapSize);
         break;
 
       case "ArrowDown":
-        this.player.moveDown(this.dimension);
+        this.player.moveDown(this.mapSize);
         break;
 
       case "ArrowRight":
-        this.player.moveRight(this.dimension);
+        this.player.moveRight(this.mapSize);
         break;
 
       case "KeyS":
@@ -73,11 +74,16 @@ export default class Game {
 
   initObstacles() {
     const arr = [];
-    for (let i = 0; i < this.dimension; i++) {
+    for (let i = 0; i < this.mapSize; i++) {
       console.log("create an obstacles");
-      const x = this.calcRandomIntWithMax(this.dimension);
-      const y = this.calcRandomIntWithMax(this.dimension);
-      const obstacle = new Obstacle(this.calcFieldId({ x: x, y: y }), x, y);
+      const x = this.calcRandomIntWithMax(this.mapSize);
+      const y = this.calcRandomIntWithMax(this.mapSize);
+      const obstacle = new Obstacle(
+        this.calcFieldId({ x: x, y: y }),
+        x,
+        y,
+        this.dimension
+      );
       this.map.htmlElement.append(obstacle.htmlElement);
       arr.push(obstacle);
     }
@@ -87,14 +93,14 @@ export default class Game {
 
   initPlayer() {
     // const playerName = prompt('Give your player a name:');
-    const player = new Player("Billy Bob");
+    const player = new Player("Billy Bob", this.dimension);
     this.map.htmlElement.append(player.htmlElement);
     console.log("player born");
     return player;
   }
 
-  initMap(dimension) {
-    const map = new Map(dimension);
+  initMap() {
+    const map = new Map(this.mapSize, this.dimension);
     this.htmlElement.append(map.htmlElement);
     return map;
   }
