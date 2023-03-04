@@ -89,6 +89,10 @@ h2 {
   background-color: var(--highlight);
 }
 
+.dead {
+  background-color: var(--dark);
+}
+
 .obstacle {
   background-color: var(--light);
 }
@@ -97,4 +101,18 @@ h2 {
   .map {
     transform: scale(0.8);
   }
+}
+
+.score-display {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 1em 0;
+  font-size: 2em;
+}
+
+.life-score {
+  display: inline-block;
+  margin: 0 1em 0 0.5em;
+  font-variant: tabular-nums;
 }

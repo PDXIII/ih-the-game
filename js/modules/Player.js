@@ -1,6 +1,7 @@
 export default class Player {
   constructor(name, dimension) {
     this.dimension = dimension;
+    this.lifeScore = 13;
     this.name = name;
     this.location = {
       x: 0,
@@ -20,40 +21,63 @@ export default class Player {
     return div;
   }
   moveRight(limit) {
-    if (this.destLocation.x < limit - 1) {
-      console.log("move East");
-      this.destLocation.x++;
-    } else {
-      console.log("end of map");
+    if (!this.isPlayerDead()) {
+      if (this.destLocation.x < limit - 1) {
+        console.log("move East");
+        this.destLocation.x++;
+      } else {
+        console.log("end of map");
+      }
     }
   }
   moveUp(limit) {
-    if (this.destLocation.y > 0) {
-      console.log("move North");
-      this.destLocation.y--;
-    } else {
-      console.log("end of map");
+    if (!this.isPlayerDead()) {
+      if (this.destLocation.y > 0) {
+        console.log("move North");
+        this.destLocation.y--;
+      } else {
+        console.log("end of map");
+      }
     }
   }
   moveDown(limit) {
-    if (this.destLocation.y < limit - 1) {
-      console.log("move South");
-      this.destLocation.y++;
-    } else {
-      console.log("end of map");
+    if (!this.isPlayerDead()) {
+      if (this.destLocation.y < limit - 1) {
+        console.log("move South");
+        this.destLocation.y++;
+      } else {
+        console.log("end of map");
+      }
     }
   }
   moveLeft(limit) {
-    if (this.destLocation.x > 0) {
-      console.log("move West");
-      this.destLocation.x--;
-    } else {
-      console.log("end of map");
+    if (!this.isPlayerDead()) {
+      if (this.destLocation.x > 0) {
+        console.log("move West");
+        this.destLocation.x--;
+      } else {
+        console.log("end of map");
+      }
     }
+  }
+
+  isPlayerDead() {
+    return this.lifeScore <= 0;
+  }
+  playerDies() {
+    this.htmlElement.classList.add("dead");
+    console.log("☠️");
   }
 
   takesDamage() {
     console.log("Autsch’n");
+    this.lifeScore--;
+    console.log(this.lifeScore);
+
+    if (this.isPlayerDead()) {
+      this.lifeScore = 0;
+      this.playerDies();
+    }
   }
 
   renderPlayer() {

@@ -11,6 +11,7 @@ export default class Game {
     this.map = this.initMap();
     this.obstacles = this.initObstacles();
     this.player = this.initPlayer();
+    this.scoreDisplay = this.initScoreDisplay();
   }
 
   detectCollision(location1, location2) {
@@ -56,6 +57,7 @@ export default class Game {
         ? this.player.takesDamage()
         : this.player.updateLocation();
     });
+    this.scoreDisplay.update(this.player.lifeScore);
   }
 
   calcFieldId(location) {
@@ -105,11 +107,55 @@ export default class Game {
     return map;
   }
 
+  initScoreDisplay() {
+    return new StatsDisplay(this.player.lifeScore);
+  }
+
   showStatus() {
     const fieldId = this.calcFieldId(this.player.location);
     console.log(this.player.showStatus());
     console.log(this.player.name, "stands on field no.: ", fieldId);
     console.log("field: ", this.map.getFieldById(fieldId));
     console.log("obstacles: ", this.obstacles);
+  }
+}
+
+class StatsDisplay {
+  constructor(lifeScore) {
+    this.lifeScore = lifeScore;
+    this.htmlElement = this.initHtmlElement();
+    this.lifeScoreDisplay = this.initLifeScoreDisplay();
+  }
+
+  initHtmlElement() {
+    const display = document.createElement("div");
+    display.classList.add("score-display");
+    display.innerHTML = `❤️`;
+
+    const app = document.getElementById("app");
+    app.append(display);
+
+    console.log("display created");
+    console.log(app);
+    return display;
+  }
+
+  initLifeScoreDisplay() {
+    const display = document.createElement("span");
+    display.classList.add("life-score");
+    display.innerHTML = this.lifeScore;
+    this.htmlElement.append(display);
+    console.log("display created");
+    console.log(this.htmlElement);
+    return display;
+  }
+
+  update(num) {
+    this.lifeScore = num;
+    this.render();
+  }
+  render() {
+    this.lifeScoreDisplay.innerHTML =
+      this.lifeScore > 0 ? this.lifeScore : "☠️";
   }
 }
