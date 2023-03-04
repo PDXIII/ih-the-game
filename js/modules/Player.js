@@ -1,7 +1,7 @@
 export default class Player {
   constructor(name, dimension) {
     this.dimension = dimension;
-    this.lifeScore = 13;
+    this.lifeScore = 5;
     this.name = name;
     this.location = {
       x: 0,

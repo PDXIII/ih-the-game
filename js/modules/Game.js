@@ -1,17 +1,21 @@
 import Player from "./Player.js";
 import Obstacle from "./Obstacle.js";
+import Narrator from "./Narrator.js";
 import Map from "./Map.js";
+import StatsDisplay from "./StatsDisplay.js";
 
 export default class Game {
   constructor() {
     this.gameController = this.initGameController();
-    this.mapSize = 32;
+    this.guiController = this.initGuiController();
+    this.mapSize = 16;
     this.dimension = 16;
     this.htmlElement = document.getElementById("app");
     this.map = this.initMap();
     this.obstacles = this.initObstacles();
     this.player = this.initPlayer();
     this.scoreDisplay = this.initScoreDisplay();
+    this.narrator = this.initNarrator();
   }
 
   detectCollision(location1, location2) {
@@ -20,24 +24,24 @@ export default class Game {
 
   gameControlHandler(event) {
     switch (event.code) {
-      case "SPACE":
-        console.log("SPACEBAR");
-        break;
-
       case "ArrowUp":
         this.player.moveUp(this.mapSize);
+        this.updateWorld();
         break;
 
       case "ArrowLeft":
         this.player.moveLeft(this.mapSize);
+        this.updateWorld();
         break;
 
       case "ArrowDown":
         this.player.moveDown(this.mapSize);
+        this.updateWorld();
         break;
 
       case "ArrowRight":
         this.player.moveRight(this.mapSize);
+        this.updateWorld();
         break;
 
       case "KeyS":
@@ -45,10 +49,25 @@ export default class Game {
         break;
 
       default:
+    }
+  }
+
+  guiControlHandler(event) {
+    console.log("gui event");
+
+    switch (event.code) {
+      case "Space":
+        event.preventDefault();
+        this.toggleNarrator();
+        break;
+      default:
         console.log("event key: ", event.code);
     }
+  }
 
-    this.updateWorld();
+  toggleNarrator() {
+    document.querySelector(".narrator").classList.toggle("scale-up");
+    this.map.htmlElement.classList.toggle("scale-down");
   }
 
   updateWorld() {
@@ -69,8 +88,16 @@ export default class Game {
   }
 
   initGameController() {
+    console.log("added game listener");
     return document.addEventListener("keyup", (event) => {
       this.gameControlHandler(event);
+    });
+  }
+
+  initGuiController() {
+    console.log("added gui listener");
+    return document.addEventListener("keyup", (event) => {
+      this.guiControlHandler(event);
     });
   }
 
@@ -89,15 +116,13 @@ export default class Game {
       this.map.htmlElement.append(obstacle.htmlElement);
       arr.push(obstacle);
     }
-    console.log("obstacles", arr);
     return arr;
   }
 
   initPlayer() {
-    // const playerName = prompt('Give your player a name:');
     const player = new Player("Billy Bob", this.dimension);
     this.map.htmlElement.append(player.htmlElement);
-    console.log("player born");
+    // console.log("player born");
     return player;
   }
 
@@ -105,6 +130,10 @@ export default class Game {
     const map = new Map(this.mapSize, this.dimension);
     this.htmlElement.append(map.htmlElement);
     return map;
+  }
+
+  initNarrator() {
+    return new Narrator();
   }
 
   initScoreDisplay() {
@@ -117,45 +146,5 @@ export default class Game {
     console.log(this.player.name, "stands on field no.: ", fieldId);
     console.log("field: ", this.map.getFieldById(fieldId));
     console.log("obstacles: ", this.obstacles);
-  }
-}
-
-class StatsDisplay {
-  constructor(lifeScore) {
-    this.lifeScore = lifeScore;
-    this.htmlElement = this.initHtmlElement();
-    this.lifeScoreDisplay = this.initLifeScoreDisplay();
-  }
-
-  initHtmlElement() {
-    const display = document.createElement("div");
-    display.classList.add("score-display");
-    display.innerHTML = `❤️`;
-
-    const app = document.getElementById("app");
-    app.append(display);
-
-    console.log("display created");
-    console.log(app);
-    return display;
-  }
-
-  initLifeScoreDisplay() {
-    const display = document.createElement("span");
-    display.classList.add("life-score");
-    display.innerHTML = this.lifeScore;
-    this.htmlElement.append(display);
-    console.log("display created");
-    console.log(this.htmlElement);
-    return display;
-  }
-
-  update(num) {
-    this.lifeScore = num;
-    this.render();
-  }
-  render() {
-    this.lifeScoreDisplay.innerHTML =
-      this.lifeScore > 0 ? this.lifeScore : "☠️";
   }
 }

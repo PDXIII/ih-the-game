@@ -9,13 +9,13 @@ export default class Map {
   initHtmlElement() {
     const div = document.createElement("div");
     div.classList.add("map");
+    div.classList.add("scale-down");
     div.style.width = this.mapSize * this.dimension;
     div.style.height = this.mapSize * this.dimension;
     return div;
   }
 
   initFields() {
-    console.log(this.htmlElement, "boom");
     const fields = [];
     for (let i = 0; i < this.mapSize; i++) {
       for (let j = 0; j < this.mapSize; j++) {

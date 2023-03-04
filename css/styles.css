@@ -61,9 +61,10 @@ h2 {
 }
 
 #app {
-  position: fixed;
+  position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
   top: 0;
   left: 0;
   width: 100vw;
@@ -93,14 +94,15 @@ h2 {
   background-color: var(--dark);
 }
 
+.dead:after {
+  content: "💀";
+  font-size: 0.7em;
+  position: absolute;
+  top: 0.05em;
+  left: 0.1em;
+}
 .obstacle {
   background-color: var(--light);
-}
-
-@media (width < 480px) {
-  .map {
-    transform: scale(0.8);
-  }
 }
 
 .score-display {
@@ -115,4 +117,74 @@ h2 {
   display: inline-block;
   margin: 0 1em 0 0.5em;
   font-variant: tabular-nums;
+}
+
+/* .scale-down {
+  transform: scale(0);
+} */
+
+.narrator.scale-up {
+  /* transform: scale(3); */
+}
+
+.narrator {
+  position: absolute;
+  display: flex;
+  width: 30%;
+  height: 100%;
+  font-size: 1em;
+  flex-direction: column;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.narrator.scale-up {
+  animation: narrator-scale 0.7s;
+  animation-direction: alternate;
+  width: 100%;
+  height: 100%;
+  font-size: 3.6em;
+}
+
+.map {
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+  /* transition: opacity 0.2s ease-in-out; */
+}
+
+.map.scale-down {
+  transform: scale(0);
+  /* opacity: 0; */
+}
+
+.message-container {
+  padding: 2em;
+}
+
+.cursor {
+  display: inline-block;
+  position: relative;
+  top: 0.1em;
+  margin-top: -0.1em;
+  width: 0.1em;
+  height: 1em;
+  background-color: var(--highlight);
+  animation: cursor-blink 0.5s infinite;
+  animation-direction: alternate;
+}
+@keyframes cursor-blink {
+  from {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
 }
