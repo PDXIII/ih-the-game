@@ -3,9 +3,16 @@ import Obstacle from "./Obstacle.js";
 import Narrator from "./Narrator.js";
 import Map from "./Map.js";
 import StatsDisplay from "./StatsDisplay.js";
+import { calcRandomIntWithMax } from "./toolkit.js";
 
 export default class Game {
   constructor() {
+    this.typesOfObstacles = [
+      { name: "flower", damage: 0, coins: 1 },
+      { name: "apple", damage: 0, coins: 5 },
+      { name: "stone", damage: 1, coins: 0 },
+      { name: "snake", damage: 5, coins: 0 },
+    ];
     this.gameController = this.initGameController();
     this.guiController = this.initGuiController();
     this.mapSize = 16;
@@ -53,15 +60,13 @@ export default class Game {
   }
 
   guiControlHandler(event) {
-    console.log("gui event");
-
     switch (event.code) {
       case "Space":
         event.preventDefault();
         this.toggleNarrator();
         break;
       default:
-        console.log("event key: ", event.code);
+      // console.log("event key: ", event.code);
     }
   }
 
@@ -73,50 +78,87 @@ export default class Game {
   updateWorld() {
     this.obstacles.forEach((ele) => {
       this.detectCollision(ele.location, this.player.destLocation)
-        ? this.player.takesDamage()
+        ? // ? this.player.takesDamage()
+          this.player.handleCollision(ele)
         : this.player.updateLocation();
     });
-    this.scoreDisplay.update(this.player.lifeScore);
+    this.scoreDisplay.update(this.player.lifeScore, this.player.coinsScore);
   }
 
   calcFieldId(location) {
     return location.x * this.dimension + location.y;
   }
 
-  calcRandomIntWithMax(max) {
-    return Math.floor(Math.random() * max);
-  }
-
   initGameController() {
-    console.log("added game listener");
+    // console.log("added game listener");
     return document.addEventListener("keyup", (event) => {
       this.gameControlHandler(event);
     });
   }
 
   initGuiController() {
-    console.log("added gui listener");
+    // console.log("added gui listener");
     return document.addEventListener("keyup", (event) => {
       this.guiControlHandler(event);
     });
   }
 
   initObstacles() {
-    const arr = [];
-    for (let i = 0; i < this.mapSize; i++) {
-      console.log("create an obstacles");
-      const x = this.calcRandomIntWithMax(this.mapSize);
-      const y = this.calcRandomIntWithMax(this.mapSize);
-      const obstacle = new Obstacle(
-        this.calcFieldId({ x: x, y: y }),
-        x,
-        y,
-        this.dimension
-      );
-      this.map.htmlElement.append(obstacle.htmlElement);
-      arr.push(obstacle);
+    const obstacles = [];
+    const amountOfEach = Math.floor(this.mapSize / 5);
+
+    this.typesOfObstacles.forEach((type) => {
+      for (let i = 0; i < amountOfEach; i++) {
+        const x = calcRandomIntWithMax(this.mapSize);
+        const y = calcRandomIntWithMax(this.mapSize);
+        const obstacle = new Obstacle(
+          this.calcFieldId({ x: x, y: y }),
+          x,
+          y,
+          this.dimension,
+          type.name,
+          type.damage,
+          type.coins
+        );
+
+        // console.log(obstacles);
+        obstacles.push(obstacle);
+
+        this.map.htmlElement.append(obstacle.htmlElement);
+      }
+    });
+
+    const goalX = calcRandomIntWithMax(this.mapSize);
+    const goalY = calcRandomIntWithMax(this.mapSize);
+
+    const goal = new Obstacle(
+      this.calcFieldId({
+        x: goalX,
+        y: goalY,
+      }),
+      goalX,
+      goalY,
+      this.dimension,
+      "goal",
+      0,
+      0
+    );
+
+    this.map.htmlElement.append(goal.htmlElement);
+    obstacles.push(goal);
+    return obstacles;
+  }
+
+  attachTypeOfObstacle(index) {
+    if (index % 4 === 0) {
+      return "flower";
+    } else if (index % 3 === 0) {
+      return "apple";
+    } else if (index % 2 === 0) {
+      return "stone";
+    } else {
+      return "snake";
     }
-    return arr;
   }
 
   initPlayer() {

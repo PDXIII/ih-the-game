@@ -1,25 +1,24 @@
+import { initHtmlElementWithLocation } from "./toolkit.js";
+
 export default class Player {
   constructor(name, dimension) {
     this.dimension = dimension;
-    this.lifeScore = 5;
+    this.lifeScore = 13;
+    this.coinsScore = 0;
     this.name = name;
     this.location = {
       x: 0,
       y: 0,
     };
-    this.htmlElement = this.initHtmlElement();
+    this.htmlElement = initHtmlElementWithLocation(
+      "div",
+      "player",
+      this.location,
+      this.dimension
+    );
     this.destLocation = { ...this.location };
   }
 
-  initHtmlElement() {
-    const div = document.createElement("div");
-    div.classList.add("player");
-    div.style.left = this.location.x * this.dimension;
-    div.style.top = this.location.y * this.dimension;
-    div.style.width = this.dimension;
-    div.style.height = this.dimension;
-    return div;
-  }
   moveRight(limit) {
     if (!this.isPlayerDead()) {
       if (this.destLocation.x < limit - 1) {
@@ -64,9 +63,36 @@ export default class Player {
   isPlayerDead() {
     return this.lifeScore <= 0;
   }
+
   playerDies() {
     this.htmlElement.classList.add("dead");
     console.log("☠️");
+  }
+
+  handleCollision(obstacle) {
+    console.log(`You’ve found a ${obstacle.type}`);
+    switch (obstacle.type) {
+      case "goal":
+        console.log("yeah, you’ve won!");
+        break;
+      case "flower":
+        this.coinsScore += obstacle.coins;
+
+        break;
+      case "apple":
+        this.coinsScore += obstacle.coins;
+
+        break;
+      case "stone":
+        this.lifeScore -= obstacle.damage;
+
+        break;
+      case "snake":
+        this.lifeScore -= obstacle.damage;
+        break;
+      default:
+        console.log("do nothing!");
+    }
   }
 
   takesDamage() {

@@ -5,6 +5,34 @@
   --dark: black;
   --light: whitesmoke;
   --highlight: #f61;
+
+  /* 
+    colorblind palettes found at https://davidmathlogic.com/colorblind/#%2373FB80-%234BF7F7-%23F1EB67-%23FFDEDE
+   */
+
+  /* true */
+  --true-green: rgb(115, 251, 128);
+  --true-turquise: rgb(75, 247, 247);
+  --true-yellow: rgb(241, 235, 103);
+  --true-pink: rgb(255, 222, 222);
+
+  /* protanopia */
+  --pro-green: rgb(246, 223, 118);
+  --pro-turquise: rgb(225, 222, 233);
+  --pro-yellow: rgb(255, 230, 109);
+  --pro-pink: rgb(234, 228, 224);
+
+  /* deuteranopia */
+  --deut-green: rgb(255, 216, 175);
+  --deut-turquise: rgb(229, 218, 255);
+  --deut-yellow: rgb(229, 218, 255);
+  --deut-pink: rgb(229, 218, 255);
+
+  /* tritanopia */
+  ---tri-green: rgb(150, 236, 255);
+  ---tri-turquise: rgb(135, 239, 255);
+  ---tri-yellow: rgb(255, 220, 237);
+  ---tri-pink: rgb(255, 220, 235);
 }
 
 /* first a simple CSS reset */
@@ -85,9 +113,9 @@ h2 {
 .field {
   outline: 0.1px dotted var(--light);
 }
-
 .player {
   background-color: var(--highlight);
+  border-radius: 50%;
 }
 
 .dead {
@@ -105,6 +133,36 @@ h2 {
   background-color: var(--light);
 }
 
+.obstacle.flower {
+  background-color: var(--true-turquise);
+}
+.obstacle.apple {
+  background-color: var(--true-green);
+}
+.obstacle.stone {
+  background-color: var(--true-yellow);
+}
+.obstacle.snake {
+  background-color: var(--true-pink);
+}
+
+.obstacle.goal {
+  background-color: transparent;
+  outline: solid 1px var(--highlight);
+}
+
+.life-score:before {
+  content: "❤️";
+
+  margin-right: 0.25em;
+}
+
+.coins-score:before {
+  content: "🪙";
+
+  margin-right: 0.25em;
+}
+
 .score-display {
   position: absolute;
   right: 0;
@@ -113,7 +171,7 @@ h2 {
   font-size: 2em;
 }
 
-.life-score {
+.score {
   display: inline-block;
   margin: 0 1em 0 0.5em;
   font-variant: tabular-nums;
@@ -164,6 +222,9 @@ h2 {
 }
 
 .cursor {
+  /*
+  Inspired by https://www.amitmerchant.com/simple-blinking-cursor-animation-using-css/ 
+ */
   display: inline-block;
   position: relative;
   top: 0.1em;

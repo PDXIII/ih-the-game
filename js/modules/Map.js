@@ -1,3 +1,8 @@
+import {
+  createElementWithClass,
+  initHtmlElementWithLocation,
+} from "./toolkit.js";
+
 export default class Map {
   constructor(mapSize, dimension) {
     this.mapSize = mapSize;
@@ -7,9 +12,7 @@ export default class Map {
   }
 
   initHtmlElement() {
-    const div = document.createElement("div");
-    div.classList.add("map");
-    div.classList.add("scale-down");
+    const div = createElementWithClass("div", "map scale-down");
     div.style.width = this.mapSize * this.dimension;
     div.style.height = this.mapSize * this.dimension;
     return div;
@@ -39,15 +42,12 @@ class Field {
       x: x,
       y: y,
     };
-    this.htmlElement = this.initHtmlElement(dimension);
-  }
-  initHtmlElement(dimension) {
-    const div = document.createElement("div");
-    div.classList.add("field");
-    div.style.top = this.location.y * dimension;
-    div.style.left = this.location.x * dimension;
-    div.style.width = dimension;
-    div.style.height = dimension;
-    return div;
+    this.dimension = dimension;
+    this.htmlElement = initHtmlElementWithLocation(
+      "div",
+      `field id-${id}`,
+      this.location,
+      this.dimension
+    );
   }
 }
