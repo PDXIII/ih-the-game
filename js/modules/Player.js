@@ -65,6 +65,7 @@ export default class Player {
   }
 
   playerDies() {
+    this.lifeScore = 0;
     this.htmlElement.classList.add("dead");
     console.log("☠️");
   }
@@ -72,7 +73,7 @@ export default class Player {
   handleCollision(obstacle) {
     console.log(`You’ve found a ${obstacle.type}`);
     switch (obstacle.type) {
-      case "goal":
+      case "exit":
         console.log("yeah, you’ve won!");
         break;
       case "flower":
@@ -85,10 +86,17 @@ export default class Player {
         break;
       case "stone":
         this.lifeScore -= obstacle.damage;
+        if (this.isPlayerDead()) {
+          this.playerDies();
+        }
 
         break;
       case "snake":
         this.lifeScore -= obstacle.damage;
+        if (this.isPlayerDead()) {
+          this.playerDies();
+        }
+
         break;
       default:
         console.log("do nothing!");

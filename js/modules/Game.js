@@ -128,37 +128,25 @@ export default class Game {
       }
     });
 
-    const goalX = calcRandomIntWithMax(this.mapSize);
-    const goalY = calcRandomIntWithMax(this.mapSize);
+    const exitX = calcRandomIntWithMax(this.mapSize);
+    const exitY = calcRandomIntWithMax(this.mapSize);
 
-    const goal = new Obstacle(
+    const exit = new Obstacle(
       this.calcFieldId({
-        x: goalX,
-        y: goalY,
+        x: exitX,
+        y: exitY,
       }),
-      goalX,
-      goalY,
+      exitX,
+      exitY,
       this.dimension,
-      "goal",
+      "exit",
       0,
       0
     );
 
-    this.map.htmlElement.append(goal.htmlElement);
-    obstacles.push(goal);
+    this.map.htmlElement.append(exit.htmlElement);
+    obstacles.push(exit);
     return obstacles;
-  }
-
-  attachTypeOfObstacle(index) {
-    if (index % 4 === 0) {
-      return "flower";
-    } else if (index % 3 === 0) {
-      return "apple";
-    } else if (index % 2 === 0) {
-      return "stone";
-    } else {
-      return "snake";
-    }
   }
 
   initPlayer() {

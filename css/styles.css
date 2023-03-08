@@ -17,22 +17,22 @@
   --true-pink: rgb(255, 222, 222);
 
   /* protanopia */
-  --pro-green: rgb(246, 223, 118);
-  --pro-turquise: rgb(225, 222, 233);
-  --pro-yellow: rgb(255, 230, 109);
-  --pro-pink: rgb(234, 228, 224);
+  --prota-green: rgb(246, 223, 118);
+  --prota-turquise: rgb(225, 222, 233);
+  --prota-yellow: rgb(255, 230, 109);
+  --prota-pink: rgb(234, 228, 224);
 
   /* deuteranopia */
-  --deut-green: rgb(255, 216, 175);
-  --deut-turquise: rgb(229, 218, 255);
-  --deut-yellow: rgb(229, 218, 255);
-  --deut-pink: rgb(229, 218, 255);
+  --deutera-green: rgb(255, 216, 175);
+  --deutera-turquise: rgb(229, 218, 255);
+  --deutera-yellow: rgb(229, 218, 255);
+  --deutera-pink: rgb(229, 218, 255);
 
   /* tritanopia */
-  ---tri-green: rgb(150, 236, 255);
-  ---tri-turquise: rgb(135, 239, 255);
-  ---tri-yellow: rgb(255, 220, 237);
-  ---tri-pink: rgb(255, 220, 235);
+  --trita-green: rgb(150, 236, 255);
+  --trita-turquise: rgb(135, 239, 255);
+  --trita-yellow: rgb(255, 220, 237);
+  --trita-pink: rgb(255, 220, 235);
 }
 
 /* first a simple CSS reset */
@@ -129,24 +129,72 @@ h2 {
   top: 0.05em;
   left: 0.1em;
 }
+
 .obstacle {
   background-color: var(--light);
 }
 
-.obstacle.flower {
+/* true color theme */
+
+.true .obstacle.flower {
   background-color: var(--true-turquise);
 }
-.obstacle.apple {
+.true .obstacle.apple {
   background-color: var(--true-green);
 }
-.obstacle.stone {
+.true .obstacle.stone {
   background-color: var(--true-yellow);
 }
-.obstacle.snake {
+.true .obstacle.snake {
   background-color: var(--true-pink);
 }
 
-.obstacle.goal {
+/* protanopia color theme */
+
+.prota .obstacle.flower {
+  background-color: var(--prota-turquise);
+}
+.prota .obstacle.apple {
+  background-color: var(--prota-green);
+}
+.prota .obstacle.stone {
+  background-color: var(--prota-yellow);
+}
+.prota .obstacle.snake {
+  background-color: var(--prota-pink);
+}
+
+/* tritanopia color theme */
+
+.trita .obstacle.flower {
+  background-color: var(--trita-turquise);
+}
+.trita .obstacle.apple {
+  background-color: var(--trita-green);
+}
+.trita .obstacle.stone {
+  background-color: var(--trita-yellow);
+}
+.trita .obstacle.snake {
+  background-color: var(--trita-pink);
+}
+
+/* deuteranopia color theme */
+
+.deutera .obstacle.flower {
+  background-color: var(--deutera-turquise);
+}
+.deutera .obstacle.apple {
+  background-color: var(--deutera-green);
+}
+.deutera .obstacle.stone {
+  background-color: var(--deutera-yellow);
+}
+.deutera .obstacle.snake {
+  background-color: var(--deutera-pink);
+}
+
+.obstacle.exit {
   background-color: transparent;
   outline: solid 1px var(--highlight);
 }
