@@ -11,6 +11,10 @@ export default class Map {
     this.fields = this.initFields();
   }
 
+  toggle() {
+    this.htmlElement.classList.toggle("scale-down");
+  }
+
   initHtmlElement() {
     const div = createElementWithClass("div", "map scale-down");
     div.style.width = this.mapSize * this.dimension;

@@ -66,8 +66,14 @@ export default class Player {
 
   playerDies() {
     this.lifeScore = 0;
+    this.cleanUpClassList();
     this.htmlElement.classList.add("dead");
     console.log("☠️");
+  }
+
+  cleanUpClassList() {
+    this.htmlElement.classList.remove("hurt");
+    this.htmlElement.classList.remove("lucky");
   }
 
   handleCollision(obstacle) {
@@ -78,14 +84,17 @@ export default class Player {
         break;
       case "flower":
         this.coinsScore += obstacle.coins;
+        this.htmlElement.classList.add("lucky");
 
         break;
       case "apple":
         this.coinsScore += obstacle.coins;
+        this.htmlElement.classList.add("lucky");
 
         break;
       case "stone":
         this.lifeScore -= obstacle.damage;
+        this.htmlElement.classList.add("hurt");
         if (this.isPlayerDead()) {
           this.playerDies();
         }
@@ -93,6 +102,7 @@ export default class Player {
         break;
       case "snake":
         this.lifeScore -= obstacle.damage;
+        this.htmlElement.classList.add("hurt");
         if (this.isPlayerDead()) {
           this.playerDies();
         }

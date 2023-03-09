@@ -21,16 +21,20 @@ const levels = [
   },
 ];
 
+const typesOfObstacles = [
+  { name: "flower", damage: 0, coins: 1 },
+  { name: "apple", damage: 0, coins: 5 },
+  { name: "stone", damage: 1, coins: 0 },
+  { name: "snake", damage: 5, coins: 0 },
+];
+
 export default class Level {
   constructor(map, narrator, levelIndex) {
     this.map = map;
     this.narrator = narrator;
-    this.typesOfObstacles = [
-      { name: "flower", damage: 0, coins: 1 },
-      { name: "apple", damage: 0, coins: 5 },
-      { name: "stone", damage: 1, coins: 0 },
-      { name: "snake", damage: 5, coins: 0 },
-    ];
+    this.typesOfObstacles = typesOfObstacles;
+    this.eventListener = this.addEventListener();
+
     this.obstacles = this.initObstacles();
     this.player = this.initPlayer();
     this.scoreDisplay = this.initScoreDisplay();
@@ -38,29 +42,71 @@ export default class Level {
     this.loadData(this.data);
   }
 
-  loadData(levelData) {
-    levelData.classList.forEach((item) => {
-      this.map.htmlElement.classList.add(item);
+  addEventListener() {
+    return document.addEventListener("keyup", (event) => {
+      this.controlHandler(event);
     });
   }
 
-  detectCollision(location1, location2) {
-    return this.calcFieldId(location1) === this.calcFieldId(location2);
+  controlHandler(event) {
+    this.player.cleanUpClassList();
+    switch (event.code) {
+      case "ArrowUp":
+        this.player.moveUp(this.map.mapSize);
+        this.updateWorld();
+        break;
+
+      case "ArrowLeft":
+        this.player.moveLeft(this.map.mapSize);
+        this.updateWorld();
+        break;
+
+      case "ArrowDown":
+        this.player.moveDown(this.map.mapSize);
+        this.updateWorld();
+        break;
+
+      case "ArrowRight":
+        this.player.moveRight(this.map.mapSize);
+        this.updateWorld();
+        break;
+
+      case "KeyS":
+        this.showStatus();
+        break;
+
+      default:
+    }
+  }
+
+  loadData(levelData) {
+    // messy
+    levelData.classList.forEach((item) => {
+      this.map.htmlElement.classList.add(item);
+    });
+    this.narrator.initScene([
+      "Hey! \n Wanna play a game?",
+      "Hit the spacebar!",
+    ]);
   }
 
   toggleNarrator() {
-    document.querySelector(".narrator").classList.toggle("scale-up");
-    this.map.htmlElement.classList.toggle("scale-down");
+    // messy
+    this.narrator.toggle();
+    this.map.toggle();
   }
 
   updateWorld() {
     this.obstacles.forEach((ele) => {
       this.detectCollision(ele.location, this.player.destLocation)
-        ? // ? this.player.takesDamage()
-          this.player.handleCollision(ele)
+        ? this.player.handleCollision(ele)
         : this.player.updateLocation();
     });
     this.scoreDisplay.update(this.player.lifeScore, this.player.coinsScore);
+  }
+
+  detectCollision(location1, location2) {
+    return this.calcFieldId(location1) === this.calcFieldId(location2);
   }
 
   calcFieldId(location) {
