@@ -236,14 +236,6 @@ h2 {
   font-variant: tabular-nums;
 }
 
-/* .scale-down {
-  transform: scale(0);
-} */
-
-/* .narrator.scale-up {
-  transform: scale(3);
-} */
-
 .narrator {
   position: absolute;
   display: flex;
@@ -265,15 +257,24 @@ h2 {
   font-size: 3.6em;
 }
 
+.cta {
+  font-style: italic;
+  font-size: 0.35em;
+  opacity: 0;
+}
+
+.cta.visible {
+  animation: cursor-blink 1.5s infinite;
+  animation-direction: alternate;
+}
+
 .map {
   opacity: 1;
   transition: all 0.3s ease-in-out;
-  /* transition: opacity 0.2s ease-in-out; */
 }
 
 .map.scale-down {
   transform: scale(0);
-  /* opacity: 0; */
 }
 
 .message-container {
@@ -296,15 +297,15 @@ h2 {
 }
 @keyframes cursor-blink {
   from {
-    opacity: 1;
-  }
-  20% {
-    opacity: 1;
-  }
-  95% {
     opacity: 0;
+  }
+  5% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
   }
   to {
-    opacity: 0;
+    opacity: 1;
   }
 }

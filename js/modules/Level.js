@@ -84,9 +84,20 @@ export default class Level {
     levelData.classList.forEach((item) => {
       this.map.htmlElement.classList.add(item);
     });
+
     this.narrator.initScene([
-      "Hey! \n Wanna play a game?",
-      "Hit the spacebar!",
+      { text: "Hey!", nextStep: "playScene" },
+      { text: "Wanna play a game?", nextStep: "toggle" },
+      {
+        text: "It is very easy! \n The goal is to reach the orange square with the orange circle.",
+        nextStep: "playScene",
+      },
+      {
+        text: "But when you hit one of the white squares, you will receive damage.",
+        nextStep: "toggle",
+      },
+      { text: "Still wanna play?", nextStep: "toggle" },
+      { text: "Okay, let’s go!", nextStep: "playScene" },
     ]);
   }
 
@@ -102,6 +113,10 @@ export default class Level {
         ? this.player.handleCollision(ele)
         : this.player.updateLocation();
     });
+    this.player.coinsScore >= 5
+      ? this.narrator.initWinningScene()
+      : console.log("go on!");
+
     this.scoreDisplay.update(this.player.lifeScore, this.player.coinsScore);
   }
 
