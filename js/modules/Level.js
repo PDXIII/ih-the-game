@@ -19,10 +19,10 @@ export default class Level {
     this.maxCoins = this.data.maxCoins;
     this.map = new Map(this.data.mapSize, this.data.mapDimension);
     this.narrator = new Narrator(levelIndex, callBack);
-    this.player = new Player(this.data.mapDimension, this.data.maxLife);
     this.scoreDisplay = new StatsDisplay(this.data.maxLife);
     this.typesOfObstacles = this.data.typesOfObstacles;
     this.obstacles = this.initObstacles();
+    this.player = new Player(this.data.mapDimension, this.data.maxLife);
     this.eventListener = this.addEventListener();
     this.setScene(this.data);
   }
@@ -96,7 +96,7 @@ export default class Level {
       this.narrator.initScene(winningScene);
       this.player.resetPlayer();
       this.kill();
-    } else if (this.player.lifeScore <= 5 && !this.player.gotPranked) {
+    } else if (this.player.lifeScore <= 3 && !this.player.gotPranked) {
       this.narrator.toggle();
       this.narrator.initScene(prank);
       this.player.gotPranked = true;

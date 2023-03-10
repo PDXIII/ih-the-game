@@ -14,7 +14,7 @@ const prank = [
   { text: `You suck!`, nextStep: "toggle" },
   { text: "It's not that difficult!", nextStep: "kill" },
 ];
-
+// is typesOfObstacles still in use
 const typesOfObstacles = [
   { name: "flower", damage: 0, coins: 1 },
   { name: "apple", damage: 0, coins: 5 },
@@ -47,7 +47,6 @@ const levels = [
       },
       { text: "Still wanna play?", nextStep: "toggle" },
       { text: "Okay, let's go!", nextStep: "kill" },
-      //   { text: " ", nextStep: "" },
     ],
   },
   {
@@ -75,7 +74,6 @@ const levels = [
       },
       { text: "Still wanna play?", nextStep: "toggle" },
       { text: "Okay, let's go!", nextStep: "kill" },
-      //   { text: " ", nextStep: "" },
     ],
   },
   {
@@ -107,7 +105,6 @@ const levels = [
       },
       { text: "Still wanna play?", nextStep: "toggle" },
       { text: "Okay, let's go!", nextStep: "kill" },
-      //   { text: " ", nextStep: "" },
     ],
   },
   {
@@ -139,7 +136,6 @@ const levels = [
       },
       { text: "Still wanna play?", nextStep: "toggle" },
       { text: "Okay, let's go!", nextStep: "kill" },
-      //   { text: " ", nextStep: "" },
     ],
   },
   {
@@ -171,7 +167,6 @@ const levels = [
       },
       { text: "Still wanna play?", nextStep: "toggle" },
       { text: "Okay, let's go!", nextStep: "kill" },
-      //   { text: " ", nextStep: "" },
     ],
   },
 ];

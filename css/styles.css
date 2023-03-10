@@ -128,7 +128,7 @@ h2 {
 }
 
 .player-animated .player {
-  animation: player-blink 0.8s infinite;
+  animation: player-jump 0.25s infinite;
   animation-direction: alternate;
 }
 
@@ -336,6 +336,21 @@ h2 {
   to {
     opacity: 1;
     box-shadow: 0 0 0 0 var(--highlight);
+  }
+}
+
+@keyframes player-jump {
+  from {
+    translate: 0 0em;
+  }
+  10% {
+    translate: 0 -0.1em;
+  }
+  80% {
+    translate: 0 -0.3em;
+  }
+  to {
+    translate: 0 -0.35em;
   }
 }
 
