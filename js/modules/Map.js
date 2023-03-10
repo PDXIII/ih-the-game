@@ -4,9 +4,9 @@ import {
 } from "./toolkit.js";
 
 export default class Map {
-  constructor(mapSize, dimension) {
-    this.mapSize = mapSize;
-    this.dimension = dimension;
+  constructor() {
+    this.mapSize = 16;
+    this.dimension = 16;
     this.htmlElement = this.initHtmlElement();
     this.fields = this.initFields();
   }
@@ -19,6 +19,7 @@ export default class Map {
     const div = createElementWithClass("div", "map scale-down");
     div.style.width = this.mapSize * this.dimension;
     div.style.height = this.mapSize * this.dimension;
+    document.querySelector("#app").append(div);
     return div;
   }
 

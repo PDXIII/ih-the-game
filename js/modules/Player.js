@@ -17,45 +17,48 @@ export default class Player {
       this.dimension
     );
     this.destLocation = { ...this.location };
+    this.hasReachedExit = false;
+    this.gotPranked = false;
   }
 
   moveRight(limit) {
     if (!this.isPlayerDead()) {
       if (this.destLocation.x < limit - 1) {
-        console.log("move East");
+        // console.log("move East");
         this.destLocation.x++;
       } else {
-        console.log("end of map");
+        // console.log("end of map");
       }
     }
   }
   moveUp(limit) {
     if (!this.isPlayerDead()) {
       if (this.destLocation.y > 0) {
-        console.log("move North");
+        // console.log("move North");
         this.destLocation.y--;
       } else {
-        console.log("end of map");
+        // console.log("end of map");
       }
     }
   }
   moveDown(limit) {
     if (!this.isPlayerDead()) {
       if (this.destLocation.y < limit - 1) {
-        console.log("move South");
+        // console.log("move South");
         this.destLocation.y++;
       } else {
-        console.log("end of map");
+        // console.log("end of map");
       }
     }
+    console.log(this.hasReachedExit);
   }
   moveLeft(limit) {
     if (!this.isPlayerDead()) {
       if (this.destLocation.x > 0) {
-        console.log("move West");
+        // console.log("move West");
         this.destLocation.x--;
       } else {
-        console.log("end of map");
+        // console.log("end of map");
       }
     }
   }
@@ -68,7 +71,7 @@ export default class Player {
     this.lifeScore = 0;
     this.cleanUpClassList();
     this.htmlElement.classList.add("dead");
-    console.log("☠️");
+    // console.log("☠️");
   }
 
   cleanUpClassList() {
@@ -76,11 +79,19 @@ export default class Player {
     this.htmlElement.classList.remove("lucky");
   }
 
+  resetPlayer() {
+    this.lifeScore = 13;
+    this.coinsScore = 0;
+    this.hasReachedExit = false;
+    this.gotPranked = false;
+  }
+
   handleCollision(obstacle) {
-    console.log(`You’ve found a ${obstacle.type}`);
+    // console.log(`You’ve found a ${obstacle.type}`);
     switch (obstacle.type) {
       case "exit":
-        console.log("yeah, you’ve won!");
+        // console.log("yeah, you’ve won!");
+        this.hasReachedExit = true;
         break;
       case "flower":
         this.coinsScore += obstacle.coins;
@@ -109,14 +120,14 @@ export default class Player {
 
         break;
       default:
-        console.log("do nothing!");
+      // console.log("do nothing!");
     }
   }
 
   takesDamage() {
-    console.log("Autsch’n");
+    // console.log("Autsch’n");
     this.lifeScore--;
-    console.log(this.lifeScore);
+    // console.log(this.lifeScore);
 
     if (this.isPlayerDead()) {
       this.lifeScore = 0;

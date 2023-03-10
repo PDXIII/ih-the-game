@@ -1,51 +1,49 @@
+import Map from "./Map.js";
+import Narrator from "./Narrator.js";
 import Player from "./Player.js";
 import Obstacle from "./Obstacle.js";
 import StatsDisplay from "./StatsDisplay.js";
 import { calcRandomIntWithMax } from "./toolkit.js";
 
-const levels = [
-  {
-    classList: [],
-  },
-  {
-    classList: ["true"],
-  },
-  {
-    classList: ["trita"],
-  },
-  {
-    classList: ["deutera"],
-  },
-  {
-    classList: ["prota"],
-  },
-];
-
-const typesOfObstacles = [
-  { name: "flower", damage: 0, coins: 1 },
-  { name: "apple", damage: 0, coins: 5 },
-  { name: "stone", damage: 1, coins: 0 },
-  { name: "snake", damage: 5, coins: 0 },
-];
+import {
+  levels,
+  winningScene,
+  dyingScene,
+  prank,
+  typesOfObstacles,
+} from "./data.js";
 
 export default class Level {
-  constructor(map, narrator, levelIndex) {
-    this.map = map;
-    this.narrator = narrator;
-    this.typesOfObstacles = typesOfObstacles;
+  constructor(levelIndex, callBack) {
+    this.data = levels;
+    console.log(this.data);
+    this.map = new Map();
+    this.narrator = new Narrator(levelIndex, callBack);
+    this.typesOfObstacles = this.data[levelIndex].typesOfObstacles;
     this.eventListener = this.addEventListener();
 
     this.obstacles = this.initObstacles();
     this.player = this.initPlayer();
     this.scoreDisplay = this.initScoreDisplay();
-    this.data = levels[levelIndex];
-    this.loadData(this.data);
+    console.log(this.data);
+    console.log(levelIndex);
+    this.loadData(levels[levelIndex]);
   }
 
   addEventListener() {
     return document.addEventListener("keyup", (event) => {
       this.controlHandler(event);
     });
+  }
+
+  kill() {
+    document.removeEventListener("keyup", this.eventListener);
+
+    const map = document.querySelector(".map");
+    document.querySelector("#app").removeChild(map);
+
+    const display = document.querySelector(".score-display");
+    document.querySelector("#app").removeChild(display);
   }
 
   controlHandler(event) {
@@ -81,30 +79,12 @@ export default class Level {
 
   loadData(levelData) {
     // messy
+    console.log(levelData.classList);
     levelData.classList.forEach((item) => {
-      this.map.htmlElement.classList.add(item);
+      document.querySelector(".map").classList.add(item);
     });
 
-    this.narrator.initScene([
-      { text: "Hey!", nextStep: "playScene" },
-      { text: "Wanna play a game?", nextStep: "toggle" },
-      {
-        text: "It is very easy! \n The goal is to reach the orange square with the orange circle.",
-        nextStep: "playScene",
-      },
-      {
-        text: "But when you hit one of the white squares, you will receive damage.",
-        nextStep: "toggle",
-      },
-      { text: "Still wanna play?", nextStep: "toggle" },
-      { text: "Okay, let’s go!", nextStep: "playScene" },
-    ]);
-  }
-
-  toggleNarrator() {
-    // messy
-    this.narrator.toggle();
-    this.map.toggle();
+    this.narrator.initScene(levelData.scene);
   }
 
   updateWorld() {
@@ -113,9 +93,22 @@ export default class Level {
         ? this.player.handleCollision(ele)
         : this.player.updateLocation();
     });
-    this.player.coinsScore >= 5
-      ? this.narrator.initWinningScene()
-      : console.log("go on!");
+
+    if (this.player.coinsScore >= 5 || this.player.hasReachedExit) {
+      this.narrator.toggle();
+      this.narrator.initScene(winningScene);
+      this.player.resetPlayer();
+      this.kill();
+    } else if (this.player.lifeScore <= 5 && !this.player.gotPranked) {
+      this.narrator.toggle();
+      this.narrator.initScene(prank);
+      this.player.gotPranked = true;
+    } else if (this.player.isPlayerDead()) {
+      this.narrator.toggle();
+      this.narrator.initScene(dyingScene);
+      this.player.resetPlayer();
+      this.kill();
+    }
 
     this.scoreDisplay.update(this.player.lifeScore, this.player.coinsScore);
   }
@@ -130,7 +123,9 @@ export default class Level {
 
   initObstacles() {
     const obstacles = [];
-    const amountOfEach = Math.floor(this.map.mapSize / 5);
+    const amountOfEach = Math.floor(
+      this.map.mapSize / this.typesOfObstacles.length
+    );
 
     this.typesOfObstacles.forEach((type) => {
       for (let i = 0; i < amountOfEach; i++) {

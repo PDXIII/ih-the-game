@@ -1,20 +1,23 @@
 import Level from "./Level.js";
-import Map from "./Map.js";
-import Narrator from "./Narrator.js";
 
 export default class Game {
   constructor() {
     this.htmlElement = document.getElementById("app");
-
-    this.map = this.initMap(16, 16); // mapSize, dimension
-
-    this.narrator = new Narrator();
-    this.level = new Level(this.map, this.narrator, 3);
+    this.levelIndex = 0;
+    this.level = new Level(this.levelIndex, this.nextLevel);
   }
 
-  initMap(mapSize, dimension) {
-    const map = new Map(mapSize, dimension);
-    this.htmlElement.append(map.htmlElement);
-    return map;
+  // initMap(mapSize, dimension) {
+  //   const map = new Map(mapSize, dimension);
+  //   this.htmlElement.append(map.htmlElement);
+  //   return map;
+  // }
+
+  nextLevel(levelIndex) {
+    levelIndex++;
+    console.log(levelIndex);
+    delete this.level;
+
+    this.level = new Level(levelIndex, this.nextLevel);
   }
 }
