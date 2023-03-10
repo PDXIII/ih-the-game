@@ -1,38 +1,19 @@
 const winningScene = [
-  { text: "Woohoo!", nextStep: "playScene" },
-  { text: "You have won!", nextStep: "playScene" },
+  { text: `Woohoo! 🎉`, nextStep: "playScene" },
+  { text: "You win! 🥳", nextStep: "playScene" },
   { text: "Ready for the next level?", nextStep: "nextLevel" },
 ];
 const dyingScene = [
-  { text: "OMG!", nextStep: "playScene" },
-  { text: "You're dead!", nextStep: "playScene" },
+  { text: `OMG! 🫣`, nextStep: "playScene" },
+  { text: `You're dead! 💀`, nextStep: "playScene" },
   { text: "Wanna play again?", nextStep: "restart" },
 ];
 
 const prank = [
-  { text: "WOW!", nextStep: "playScene" },
-  { text: "You suck!", nextStep: "toggle" },
+  { text: `WOW! 😡`, nextStep: "playScene" },
+  { text: `You suck!`, nextStep: "toggle" },
   { text: "It's not that difficult!", nextStep: "kill" },
 ];
-
-// const scene = [
-//   { text: "Hey!", nextStep: "playScene" },
-//   { text: "Wanna play a game?", nextStep: "toggle" },
-//   {
-//     text: "It is very easy!",
-//     nextStep: "playScene",
-//   },
-//   {
-//     text: "The goal is to reach the orange square with the orange circle.",
-//     nextStep: "playScene",
-//   },
-//   {
-//     text: "But when you hit one of the white squares, you will receive damage.",
-//     nextStep: "toggle",
-//   },
-//   { text: "Still wanna play?", nextStep: "toggle" },
-//   { text: "Okay, let's go!", nextStep: "kill" },
-// ];
 
 const typesOfObstacles = [
   { name: "flower", damage: 0, coins: 1 },
@@ -43,10 +24,13 @@ const typesOfObstacles = [
 
 const levels = [
   {
+    mapSize: 8,
+    mapDimension: 16,
+    maxCoins: 10,
     classList: [],
     typesOfObstacles: [{ name: "stone", damage: 1, coins: 0 }],
     scene: [
-      { text: "Hey!", nextStep: "playScene" },
+      { text: `Hey! 😃`, nextStep: "playScene" },
       { text: "Wanna play a game?", nextStep: "toggle" },
       {
         text: "It is very easy!",
@@ -66,7 +50,10 @@ const levels = [
     ],
   },
   {
-    classList: ["true", "show-coin-score"],
+    mapSize: 16,
+    mapDimension: 16,
+    maxCoins: 10,
+    classList: ["true"],
     typesOfObstacles: [
       { name: "flower", damage: 0, coins: 1 },
       { name: "apple", damage: 0, coins: 5 },
@@ -90,7 +77,10 @@ const levels = [
     ],
   },
   {
-    classList: ["trita"],
+    mapSize: 16,
+    mapDimension: 16,
+    maxCoins: 10,
+    classList: ["trita", "player-animated"],
     typesOfObstacles: [
       { name: "flower", damage: 0, coins: 1 },
       { name: "apple", damage: 0, coins: 5 },
@@ -118,7 +108,10 @@ const levels = [
     ],
   },
   {
-    classList: ["deutera"],
+    mapSize: 16,
+    mapDimension: 16,
+    maxCoins: 10,
+    classList: ["deutera", "player-animated"],
     typesOfObstacles: [
       { name: "flower", damage: 0, coins: 1 },
       { name: "apple", damage: 0, coins: 5 },
@@ -146,7 +139,10 @@ const levels = [
     ],
   },
   {
-    classList: ["prota"],
+    mapSize: 16,
+    mapDimension: 16,
+    maxCoins: 10,
+    classList: ["prota", "player-animated"],
     typesOfObstacles: [
       { name: "flower", damage: 0, coins: 1 },
       { name: "apple", damage: 0, coins: 5 },

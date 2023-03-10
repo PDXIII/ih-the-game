@@ -124,6 +124,12 @@ h2 {
   position: absolute;
   top: -0.2em;
   left: -0.08em;
+  /* animation: player-message 0.5s infinite; */
+}
+
+.player-animated .player {
+  animation: player-blink 0.8s infinite;
+  animation-direction: alternate;
 }
 
 .dead {
@@ -138,7 +144,7 @@ h2 {
   content: "😵";
 }
 .lucky:after {
-  content: "🥳";
+  content: "🤩";
 }
 
 .obstacle {
@@ -216,14 +222,6 @@ h2 {
   margin-right: 0.25em;
 }
 
-/* .score.coins-score {
-  display: none;
-}
-
-.show-coin-score .score.coins-score {
-  display: inline;
-} */
-
 .coins-score:before {
   content: "🪙";
 
@@ -268,11 +266,12 @@ h2 {
 }
 
 .cta {
-  /* font-style: italic; */
+  margin-top: 0.3em;
+  color: var(--highlight);
   font-size: 0.6em;
   font-weight: 200;
   opacity: 0;
-  animation: cursor-blink 1.5s infinite;
+  animation: cursor-blink 1.6s infinite;
   animation-direction: alternate;
   animation-delay: 1s;
 }
@@ -294,7 +293,8 @@ h2 {
   /*
   Inspired by https://www.amitmerchant.com/simple-blinking-cursor-animation-using-css/ 
  */
-  display: inline-block;
+  /* display: inline-block; */
+  display: none; /* atm hidden */
   position: relative;
   top: 0.1em;
   margin-top: -0.1em;
@@ -304,6 +304,7 @@ h2 {
   animation: cursor-blink 0.5s infinite;
   animation-direction: alternate;
 }
+
 @keyframes cursor-blink {
   from {
     opacity: 0;
@@ -316,5 +317,54 @@ h2 {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes player-blink {
+  from {
+    opacity: 0.4;
+    box-shadow: 0 0 4px 4px var(--highlight);
+  }
+  5% {
+    opacity: 0.4;
+    box-shadow: 0 0 4px 4px var(--highlight);
+  }
+  80% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--highlight);
+  }
+  to {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--highlight);
+  }
+}
+
+/* doesn’t work as expected */
+@keyframes player-message {
+  from {
+    opacity: 0;
+    translate: 0 0;
+  }
+  5% {
+    opacity: 0;
+    translate: 0 0.5em;
+  }
+  50% {
+    opacity: 1;
+    translate: 0 0.5em;
+  }
+  80% {
+    opacity: 1;
+    translate: 0 0.6em;
+  }
+
+  90% {
+    opacity: 0.3;
+    translate: 0 0.7em;
+  }
+
+  to {
+    opacity: 0;
+    translate: 0 1em;
   }
 }

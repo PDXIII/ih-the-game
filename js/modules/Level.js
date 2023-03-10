@@ -15,19 +15,22 @@ import {
 
 export default class Level {
   constructor(levelIndex, callBack) {
-    this.data = levels;
+    // this.data = levels;
+    this.data = levels[levelIndex];
     console.log(this.data);
-    this.map = new Map();
+    this.map = new Map(this.data.mapSize, this.data.mapDimension);
     this.narrator = new Narrator(levelIndex, callBack);
-    this.typesOfObstacles = this.data[levelIndex].typesOfObstacles;
+    // this.typesOfObstacles = this.data[levelIndex].typesOfObstacles;
+    this.typesOfObstacles = this.data.typesOfObstacles;
     this.eventListener = this.addEventListener();
-
+    this.maxCoins = this.data.maxCoins;
     this.obstacles = this.initObstacles();
     this.player = this.initPlayer();
     this.scoreDisplay = this.initScoreDisplay();
-    console.log(this.data);
-    console.log(levelIndex);
-    this.loadData(levels[levelIndex]);
+    // console.log(this.data);
+    // console.log(levelIndex);
+    // this.loadData(this.data[levelIndex]);
+    this.loadData(this.data);
   }
 
   addEventListener() {
@@ -94,7 +97,7 @@ export default class Level {
         : this.player.updateLocation();
     });
 
-    if (this.player.coinsScore >= 5 || this.player.hasReachedExit) {
+    if (this.player.coinsScore >= this.maxCoins || this.player.hasReachedExit) {
       this.narrator.toggle();
       this.narrator.initScene(winningScene);
       this.player.resetPlayer();

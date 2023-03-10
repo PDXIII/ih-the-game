@@ -4,9 +4,9 @@ import {
 } from "./toolkit.js";
 
 export default class Map {
-  constructor() {
-    this.mapSize = 16;
-    this.dimension = 16;
+  constructor(mapSize, mapDimension) {
+    this.mapSize = mapSize;
+    this.dimension = mapDimension;
     this.htmlElement = this.initHtmlElement();
     this.fields = this.initFields();
   }
