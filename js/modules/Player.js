@@ -1,11 +1,10 @@
 import { initHtmlElementWithLocation } from "./toolkit.js";
 
 export default class Player {
-  constructor(name, dimension) {
+  constructor(dimension, maxLife) {
     this.dimension = dimension;
-    this.lifeScore = 13;
+    this.lifeScore = maxLife;
     this.coinsScore = 0;
-    this.name = name;
     this.location = {
       x: 0,
       y: 0,
@@ -19,6 +18,8 @@ export default class Player {
     this.destLocation = { ...this.location };
     this.hasReachedExit = false;
     this.gotPranked = false;
+
+    document.querySelector(".map").append(this.htmlElement);
   }
 
   moveRight(limit) {
@@ -147,6 +148,6 @@ export default class Player {
   }
 
   showStatus() {
-    return `My name is ${this.name} and I am currently at location ${this.location.x}/${this.location.y}.`;
+    return `I am currently at location ${this.location.x}/${this.location.y}.`;
   }
 }

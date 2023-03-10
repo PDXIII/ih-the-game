@@ -7,12 +7,6 @@ export default class Game {
     this.level = new Level(this.levelIndex, this.nextLevel);
   }
 
-  // initMap(mapSize, dimension) {
-  //   const map = new Map(mapSize, dimension);
-  //   this.htmlElement.append(map.htmlElement);
-  //   return map;
-  // }
-
   nextLevel(levelIndex) {
     levelIndex++;
     console.log(levelIndex);

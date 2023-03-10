@@ -15,22 +15,16 @@ import {
 
 export default class Level {
   constructor(levelIndex, callBack) {
-    // this.data = levels;
     this.data = levels[levelIndex];
-    console.log(this.data);
+    this.maxCoins = this.data.maxCoins;
     this.map = new Map(this.data.mapSize, this.data.mapDimension);
     this.narrator = new Narrator(levelIndex, callBack);
-    // this.typesOfObstacles = this.data[levelIndex].typesOfObstacles;
+    this.player = new Player(this.data.mapDimension, this.data.maxLife);
+    this.scoreDisplay = new StatsDisplay(this.data.maxLife);
     this.typesOfObstacles = this.data.typesOfObstacles;
-    this.eventListener = this.addEventListener();
-    this.maxCoins = this.data.maxCoins;
     this.obstacles = this.initObstacles();
-    this.player = this.initPlayer();
-    this.scoreDisplay = this.initScoreDisplay();
-    // console.log(this.data);
-    // console.log(levelIndex);
-    // this.loadData(this.data[levelIndex]);
-    this.loadData(this.data);
+    this.eventListener = this.addEventListener();
+    this.setScene(this.data);
   }
 
   addEventListener() {
@@ -80,7 +74,7 @@ export default class Level {
     }
   }
 
-  loadData(levelData) {
+  setScene(levelData) {
     // messy
     console.log(levelData.classList);
     levelData.classList.forEach((item) => {
@@ -172,21 +166,9 @@ export default class Level {
     return obstacles;
   }
 
-  initPlayer() {
-    const player = new Player("Billy Bob", this.map.dimension);
-    this.map.htmlElement.append(player.htmlElement);
-    // console.log("player born");
-    return player;
-  }
-
-  initScoreDisplay() {
-    return new StatsDisplay(this.player.lifeScore);
-  }
-
   showStatus() {
     const fieldId = this.calcFieldId(this.player.location);
     console.log(this.player.showStatus());
-    console.log(this.player.name, "stands on field no.: ", fieldId);
     console.log("field: ", this.map.getFieldById(fieldId));
     console.log("obstacles: ", this.obstacles);
   }

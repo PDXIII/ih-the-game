@@ -26,6 +26,7 @@ const levels = [
   {
     mapSize: 8,
     mapDimension: 16,
+    maxLife: 6,
     maxCoins: 10,
     classList: [],
     typesOfObstacles: [{ name: "stone", damage: 1, coins: 0 }],
@@ -52,6 +53,7 @@ const levels = [
   {
     mapSize: 16,
     mapDimension: 16,
+    maxLife: 16,
     maxCoins: 10,
     classList: ["true"],
     typesOfObstacles: [
@@ -79,6 +81,7 @@ const levels = [
   {
     mapSize: 16,
     mapDimension: 16,
+    maxLife: 16,
     maxCoins: 10,
     classList: ["trita", "player-animated"],
     typesOfObstacles: [
@@ -110,6 +113,7 @@ const levels = [
   {
     mapSize: 16,
     mapDimension: 16,
+    maxLife: 16,
     maxCoins: 10,
     classList: ["deutera", "player-animated"],
     typesOfObstacles: [
@@ -141,6 +145,7 @@ const levels = [
   {
     mapSize: 16,
     mapDimension: 16,
+    maxLife: 16,
     maxCoins: 10,
     classList: ["prota", "player-animated"],
     typesOfObstacles: [
