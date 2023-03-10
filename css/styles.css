@@ -132,6 +132,11 @@ h2 {
   animation-direction: alternate;
 }
 
+.player-animated .obstacle.exit {
+  animation: cursor-blink 0.5s infinite;
+  animation-direction: alternate;
+}
+
 .dead {
   background-color: var(--dark);
 }
@@ -320,14 +325,14 @@ h2 {
   }
 }
 
-@keyframes player-blink {
+@keyframes exit-blink {
   from {
     opacity: 0.4;
-    box-shadow: 0 0 4px 4px var(--highlight);
+    box-shadow: 0 0 8px 8px var(--highlight);
   }
   5% {
     opacity: 0.4;
-    box-shadow: 0 0 4px 4px var(--highlight);
+    box-shadow: 0 0 8px 8px var(--highlight);
   }
   80% {
     opacity: 1;

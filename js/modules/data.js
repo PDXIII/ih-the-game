@@ -42,7 +42,7 @@ const levels = [
         nextStep: "playScene",
       },
       {
-        text: "But when you hit one of the white squares, you will receive damage.",
+        text: "But when you'll hit one of the white squares, you will receive damage.",
         nextStep: "toggle",
       },
       { text: "Still wanna play?", nextStep: "toggle" },
@@ -63,14 +63,13 @@ const levels = [
     ],
     scene: [
       { text: "Cool!", nextStep: "playScene" },
-      { text: "Now we add some diversity.", nextStep: "toggle" },
       {
-        text: "As you can see, we have some different obstacles on the map.",
+        text: "Now we add some diversity with some different obstacles on the map.",
         nextStep: "playScene",
       },
       {
         text: "Some will give you coins, and some will hurt you.",
-        nextStep: "toggle",
+        nextStep: "playScene",
       },
       { text: "Still wanna play?", nextStep: "toggle" },
       { text: "Okay, let's go!", nextStep: "kill" },
@@ -89,19 +88,15 @@ const levels = [
       { name: "snake", damage: 5, coins: 0 },
     ],
     scene: [
-      { text: "Hey!", nextStep: "playScene" },
-      { text: "Wanna play a game?", nextStep: "toggle" },
+      { text: `Nice! 🤓`, nextStep: "playScene" },
+      { text: "Have you ever heard about tritanopia?", nextStep: "playScene" },
       {
-        text: "It is very easy!",
+        text: "Better know as one kind of color blindness.",
         nextStep: "playScene",
       },
       {
-        text: "The goal is to reach the orange square with the orange circle.",
+        text: "So, colors have changed now. But we’ve added a nice animation to your player",
         nextStep: "playScene",
-      },
-      {
-        text: "But when you hit one of the white squares, you will receive damage.",
-        nextStep: "toggle",
       },
       { text: "Still wanna play?", nextStep: "toggle" },
       { text: "Okay, let's go!", nextStep: "kill" },
@@ -121,7 +116,7 @@ const levels = [
     ],
     scene: [
       { text: "Hey!", nextStep: "playScene" },
-      { text: "Wanna play a game?", nextStep: "toggle" },
+      { text: "This is Level 3 and it's very buggy!", nextStep: "toggle" },
       {
         text: "It is very easy!",
         nextStep: "playScene",
