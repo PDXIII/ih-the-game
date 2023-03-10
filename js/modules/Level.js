@@ -96,7 +96,11 @@ export default class Level {
       this.narrator.initScene(winningScene);
       this.player.resetPlayer();
       this.kill();
-    } else if (this.player.lifeScore <= 3 && !this.player.gotPranked) {
+    } else if (
+      this.player.lifeScore <= 3 &&
+      !this.player.gotPranked &&
+      !this.player.isPlayerDead()
+    ) {
       this.narrator.toggle();
       this.narrator.initScene(prank);
       this.player.gotPranked = true;
